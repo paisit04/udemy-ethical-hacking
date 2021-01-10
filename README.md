@@ -49,3 +49,39 @@ msf6 > sessions -i <id>
 
 ## Section 9: SMBGhost CVE 2020-0796 - Windows 10 Manual Exploitation
 * https://rufus.ie/
+
+## Section 10: Gaining Access (Viruses, Trojans, Payloads...)
+* Msfvenom
+```
+$ msfvenom -p ...
+$ msfvenom --list encoders
+```
+* virustotal
+* veil
+* TheFatRat
+* Hexeditor
+
+## Section 11: Post Exploitation - Elevating Privileges, Extracting Data, Running Keyloggers ..
+* meterpreter (support both linux and window commands)
+```
+meterpreter > help
+meterpreter > background
+meterpreter > guid
+meterpreter > getuid
+meterpreter > pwd
+meterpreter > dir
+meterpreter > ls
+meterpreter > shell
+meterpreter > getsystem
+meterpreter > search -f *.jpg
+meterpreter > clearev
+meterpreter > run post/windows/gather/enum_applications
+```
+* search bypassuac
+```
+msf6 > search bypassuac
+```
+* search persistence
+```
+msf6 > search persistence
+```
